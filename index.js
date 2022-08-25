@@ -1,7 +1,7 @@
 import express, { json } from 'express';
 import RecipeRoutes from './src/routes/recipes.routes';
 import cors from 'cors';
-import connectDB from './src/Models/dbconnect';
+import connectDB from './src/models/dbconnect';
 import dotenv from 'dotenv';
 dotenv.config();
 connectDB();
