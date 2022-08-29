@@ -16,7 +16,12 @@ export const addRecipe = async (req, res) => {
 
 export const getAll = async (req, res) => {
 	try {
-		const data = await Model.find();
+		const skip =
+			req.query.skip && /^\d+$/.test(req.query.skip)
+				? Number(req.query.skip)
+				: 0;
+
+		const data = await Model.find({}, undefined, { skip, limit: 9 });
 		res.json(data);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
