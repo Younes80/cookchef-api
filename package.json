@@ -4,7 +4,7 @@
 	"description": "",
 	"scripts": {
 		"start": "set NODE_ENV=development && nodemon --exec babel-node bin/www",
-		"start:prod": "set NODE_ENV=production && nodemon --exec babel-node --loader bin/www",
+		"start:prod": "set NODE_ENV=production && nodemon --exec babel-node bin/www",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
