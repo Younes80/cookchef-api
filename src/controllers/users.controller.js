@@ -2,6 +2,7 @@ import usersModel from '../models/users.model';
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 import fs from 'fs';
+import path from 'path';
 
 export const getUsers = async (req, res) => {
 	try {
