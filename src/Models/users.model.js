@@ -18,6 +18,9 @@ const UserSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		profilePicture: {
+			type: String,
+		},
 		favoris: [
 			{
 				type: mongoose.Schema.Types.ObjectId,

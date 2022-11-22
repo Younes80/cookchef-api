@@ -6,6 +6,7 @@ import FavorisRoutes from './src/routes/favoris.routes';
 import cors from 'cors';
 import connectDB from './src/models/dbconnect';
 import dotenv from 'dotenv';
+import errorHandler from 'errorhandler';
 dotenv.config();
 connectDB();
 
@@ -23,7 +24,16 @@ app.use('/api/recipes', RecipeRoutes);
 app.use('/api/users', UserRoutes);
 app.use('/api/favoris', FavorisRoutes);
 
-const PORT = 3333;
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
-});
+if (process.env.NODE_ENV === 'development') {
+	app.use(errorHandler());
+} else {
+	app.use((err, req, res, next) => {
+		const code = err.code || 500;
+		res.status(code).json({
+			code: code,
+			message: code === 500 ? null : err.message,
+		});
+	});
+}
+
+export default app;

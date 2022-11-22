@@ -5,6 +5,7 @@ export const addRecipe = async (req, res) => {
 		title: req.body.title,
 		image: req.body.image,
 		liked: false,
+		author: req.body.author,
 	});
 	try {
 		const dataToSave = await data.save();
@@ -21,8 +22,12 @@ export const getAll = async (req, res) => {
 				? Number(req.query.skip)
 				: 0;
 
-		const data = await Model.find({}, undefined, { skip, limit: 9 });
-		res.json(data);
+		const data = await Model.find({}, undefined, { skip, limit: 9 })
+			.populate('author', ['firstname', 'lastname']) // entre [] ne renvoie uniquement les champs indiqués + id
+			.exec((err, recipe) => {
+				res.json(recipe);
+			});
+		return data;
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
@@ -30,8 +35,12 @@ export const getAll = async (req, res) => {
 
 export const getOne = async (req, res) => {
 	try {
-		const data = await Model.findById(req.params.id);
-		res.json(data);
+		const data = await Model.findById(req.params.id)
+			.populate('author', ['firstname', 'lastname']) // entre [] ne renvoie uniquement les champs indiqués + id
+			.exec((err, recipe) => {
+				res.json(recipe);
+			});
+		return data;
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}

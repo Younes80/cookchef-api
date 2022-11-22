@@ -1,0 +1,22 @@
+import { createServer as http } from 'http';
+import { createServer as https } from 'https';
+import app from '../app.js';
+import fs from 'fs';
+import path from 'path';
+
+http((req, res) => {
+	res.writeHead('301', { Location: `https://${req.headers.host}${req.url}` });
+	res.end();
+}).listen(80);
+
+const options = {
+	key: fs.readFileSync(path.join(__dirname, '../ssl/local.key')),
+	cert: fs.readFileSync(path.join(__dirname, '../ssl/local.crt')),
+};
+
+const server = https(options, app);
+
+const PORT = 443;
+server.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
+});

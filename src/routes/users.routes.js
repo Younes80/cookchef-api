@@ -5,7 +5,9 @@ import {
 	getUser,
 	getUsers,
 	updateUser,
+	updateUserImage,
 } from '../controllers/users.controller';
+import uploadProfile from '../middleware/uploadProfile';
 
 const router = express.Router();
 
@@ -19,5 +21,8 @@ router.get('/', getUsers);
 router.get('/:id', getUser);
 router.patch('/:id', updateUser);
 router.delete('/:id', deleteUser);
+
+// Upload image profile
+router.patch('/image/:id', uploadProfile, updateUserImage);
 
 export default router;
